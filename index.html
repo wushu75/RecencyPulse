@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RecencyPulse — Search what people are actually saying</title>
+<meta name="description" content="A free, open-source Chrome extension. Skip the SEO spam and jump straight to recent Reddit and TikTok discussion on any topic.">
+
+<meta property="og:title" content="RecencyPulse — Search what people are actually saying">
+<meta property="og:description" content="Free, open-source Chrome extension. One box, two shortcuts, straight to recent Reddit and TikTok discussion.">
+<meta property="og:type" content="website">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --paper:#f7f7f5;
+    --ink:#14131a;
+    --ink-soft:#5c5a66;
+    --hair:#e2e1dc;
+    --orange:#ff4500;
+    --black:#010101;
+    --display:"Bricolage Grotesque",system-ui,sans-serif;
+    --mono:"JetBrains Mono",ui-monospace,monospace;
+  }
+
+  *{box-sizing:border-box;}
+
+  html{scroll-behavior:smooth;}
+
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:var(--display);
+    font-size:17px;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  .wrap{
+    width:100%;
+    max-width:860px;
+    margin:0 auto;
+    padding:0 24px;
+  }
+
+  /* ---------- structural device: the offset stroke ---------- */
+  .stroke{
+    outline:3px solid var(--ink);
+    outline-offset:4px;
+  }
+
+  /* ---------- masthead ---------- */
+  header{
+    padding:28px 0 0;
+  }
+  .bar{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:16px;
+  }
+  .mark{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-weight:800;
+    letter-spacing:-0.02em;
+    font-size:17px;
+  }
+  .chip{
+    width:26px;height:26px;
+    border-radius:7px;
+    background:var(--orange);
+    color:#fff;
+    display:grid;place-items:center;
+    font-size:11px;font-weight:800;
+    letter-spacing:-0.03em;
+  }
+  .bar a{
+    color:var(--ink-soft);
+    text-decoration:none;
+    font-size:14px;
+    border-bottom:1px solid var(--hair);
+    padding-bottom:1px;
+  }
+  .bar a:hover{color:var(--ink);border-color:var(--ink);}
+
+  /* ---------- hero ---------- */
+  .hero{padding:64px 0 8px;}
+
+  .eyebrow{
+    font-family:var(--mono);
+    font-size:12px;
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+    display:flex;align-items:center;gap:9px;
+    margin-bottom:22px;
+  }
+  .dot{
+    width:7px;height:7px;border-radius:50%;
+    background:var(--orange);
+    animation:pulse 2.4s ease-in-out infinite;
+  }
+  @keyframes pulse{
+    0%,100%{opacity:1;transform:scale(1);}
+    50%{opacity:.35;transform:scale(.8);}
+  }
+
+  h1{
+    font-size:clamp(38px,7vw,68px);
+    line-height:1.02;
+    letter-spacing:-0.035em;
+    font-weight:800;
+    margin:0 0 20px;
+    max-width:15ch;
+  }
+  h1 em{
+    font-style:normal;
+    color:var(--orange);
+  }
+
+  .lede{
+    font-size:clamp(17px,2.2vw,20px);
+    color:var(--ink-soft);
+    max-width:52ch;
+    margin:0 0 40px;
+  }
+
+  /* ---------- live demo ---------- */
+  .demo{
+    background:#fff;
+    border-radius:14px;
+    padding:22px;
+    border:1px solid var(--hair);
+    margin-bottom:14px;
+  }
+  .demo-label{
+    font-family:var(--mono);
+    font-size:11px;
+    letter-spacing:0.07em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+    margin-bottom:12px;
+  }
+  #topic{
+    width:100%;
+    font-family:var(--display);
+    font-size:19px;
+    font-weight:600;
+    padding:13px 15px;
+    border:1px solid #cfcec9;
+    border-radius:9px;
+    background:var(--paper);
+    color:var(--ink);
+    outline:none;
+    margin-bottom:14px;
+  }
+  #topic:focus{border-color:var(--ink);}
+  #topic::placeholder{color:#a5a3ad;font-weight:400;}
+
+  .picks{display:flex;gap:11px;flex-wrap:wrap;}
+  .pick{
+    flex:1 1 190px;
+    border:none;
+    border-radius:9px;
+    padding:13px 14px;
+    color:#fff;
+    font-family:var(--display);
+    font-size:15px;
+    font-weight:600;
+    cursor:pointer;
+    text-align:left;
+    outline:3px solid transparent;
+    outline-offset:3px;
+    transition:outline-color .16s ease,transform .06s ease;
+  }
+  .pick:active{transform:translateY(1px);}
+  .pick small{
+    display:block;
+    font-family:var(--mono);
+    font-size:10.5px;
+    font-weight:400;
+    opacity:.72;
+    margin-top:3px;
+    letter-spacing:.02em;
+  }
+  .pick.reddit{background:var(--orange);}
+  .pick.tiktok{background:var(--black);}
+  .pick.reddit.on{outline-color:var(--orange);}
+  .pick.tiktok.on{outline-color:var(--black);}
+
+  /* URL readout — the signature */
+  .readout{
+    font-family:var(--mono);
+    font-size:12.5px;
+    line-height:1.7;
+    color:var(--ink-soft);
+    background:var(--ink);
+    color:#e8e7e2;
+    border-radius:11px;
+    padding:15px 17px;
+    overflow-x:auto;
+    white-space:nowrap;
+    margin-bottom:44px;
+  }
+  .readout .k{color:#8f8d99;}
+  .readout .q{color:#ff7a45;}
+  .readout .t{color:#7fd6c0;}
+  .readout .caret{
+    display:inline-block;
+    width:7px;
+    background:#ff7a45;
+    animation:blink 1.1s steps(1) infinite;
+    margin-left:1px;
+  }
+  @keyframes blink{50%{opacity:0;}}
+
+  /* ---------- sections ---------- */
+  section{padding:46px 0;border-top:1px solid var(--hair);}
+  h2{
+    font-size:13px;
+    font-family:var(--mono);
+    font-weight:600;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+    margin:0 0 26px;
+  }
+
+  .rows{display:grid;gap:26px;}
+  @media(min-width:700px){.rows{grid-template-columns:1fr 1fr;gap:34px;}}
+  .row h3{
+    font-size:19px;
+    font-weight:600;
+    letter-spacing:-0.02em;
+    margin:0 0 7px;
+  }
+  .row p{margin:0;color:var(--ink-soft);font-size:15.5px;}
+
+  /* comparison */
+  .versus{display:grid;gap:16px;}
+  @media(min-width:700px){.versus{grid-template-columns:1fr 1fr;}}
+  .card{
+    background:#fff;
+    border:1px solid var(--hair);
+    border-radius:12px;
+    padding:20px;
+  }
+  .card .tag{
+    font-family:var(--mono);
+    font-size:11px;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+    margin-bottom:13px;
+  }
+  .card.win{border-color:var(--ink);}
+  .card.win .tag{color:var(--orange);}
+  .item{
+    font-size:14.5px;
+    padding:8px 0;
+    border-bottom:1px dashed var(--hair);
+    color:var(--ink-soft);
+  }
+  .item:last-child{border:none;}
+  .item b{color:var(--ink);font-weight:600;}
+
+  /* privacy */
+  .facts{list-style:none;padding:0;margin:0;display:grid;gap:11px;}
+  .facts li{
+    display:flex;gap:12px;align-items:flex-start;
+    font-size:15.5px;color:var(--ink-soft);
+  }
+  .facts .n{
+    font-family:var(--mono);
+    font-size:12px;
+    color:var(--orange);
+    padding-top:3px;
+    flex:none;
+  }
+  .facts b{color:var(--ink);font-weight:600;}
+
+  /* ---------- cta ---------- */
+  .cta{
+    text-align:center;
+    padding:64px 0 20px;
+    border-top:1px solid var(--hair);
+  }
+  .cta h2{margin-bottom:16px;}
+  .cta p{color:var(--ink-soft);max-width:42ch;margin:0 auto 28px;}
+  .install{
+    display:inline-block;
+    background:var(--ink);
+    color:var(--paper);
+    text-decoration:none;
+    font-weight:600;
+    font-size:16px;
+    padding:15px 30px;
+    border-radius:10px;
+    outline:3px solid transparent;
+    outline-offset:4px;
+    transition:outline-color .16s ease;
+  }
+  .install:hover{outline-color:var(--ink);}
+  .sub{
+    margin-top:16px;
+    font-family:var(--mono);
+    font-size:12px;
+    color:var(--ink-soft);
+  }
+  .sub a{color:var(--ink-soft);}
+
+  footer{
+    padding:36px 0 46px;
+    font-family:var(--mono);
+    font-size:11.5px;
+    color:var(--ink-soft);
+    display:flex;
+    justify-content:space-between;
+    gap:14px;
+    flex-wrap:wrap;
+  }
+  footer a{color:var(--ink-soft);text-decoration:none;border-bottom:1px solid var(--hair);}
+  footer a:hover{color:var(--ink);}
+
+  :focus-visible{outline:3px solid var(--orange);outline-offset:3px;}
+
+  @media(prefers-reduced-motion:reduce){
+    *{animation:none!important;transition:none!important;}
+    html{scroll-behavior:auto;}
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <header>
+    <div class="bar">
+      <div class="mark"><span class="chip">RP</span> RecencyPulse</div>
+      <a href="#install">Add to Chrome</a>
+    </div>
+  </header>
+
+  <div class="hero">
+    <div class="eyebrow"><span class="dot"></span> Free &amp; open source · Chrome</div>
+
+    <h1>Search what people <em>actually</em> said this month.</h1>
+
+    <p class="lede">
+      Search results have filled up with pages written for search engines instead of people.
+      RecencyPulse takes your topic straight to recent Reddit threads and TikTok posts — one box, two shortcuts, no wading.
+    </p>
+
+    <div class="demo">
+      <div class="demo-label">Try it — this box is the real thing</div>
+      <input id="topic" type="text" placeholder="air fryer, moving to Lisbon, that new phone…" autocomplete="off">
+      <div class="picks">
+        <button class="pick reddit on" data-p="reddit">
+          Search Reddit
+          <small>past month only</small>
+        </button>
+        <button class="pick tiktok" data-p="tiktok">
+          Search TikTok
+          <small>current posts</small>
+        </button>
+      </div>
+    </div>
+
+    <div class="readout" id="readout"></div>
+  </div>
+
+  <section>
+    <h2>What it does</h2>
+    <div class="rows">
+      <div class="row">
+        <h3>Time-bounded by default</h3>
+        <p>Reddit searches are pinned to the past month, so you get what people think now — not a thread from 2016 that happens to rank well.</p>
+      </div>
+      <div class="row">
+        <h3>Two clicks, not twelve</h3>
+        <p>No typing "reddit" after every query, no opening a site and hunting for its search box, no fighting with filter menus.</p>
+      </div>
+      <div class="row">
+        <h3>Nothing to set up</h3>
+        <p>Install it, click the icon, type. There's no account, no onboarding, and no settings screen to get lost in.</p>
+      </div>
+      <div class="row">
+        <h3>Keyboard-first</h3>
+        <p>Pick a platform once and press Enter. The extension remembers which one you're aiming at while the popup is open.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>The difference</h2>
+    <div class="versus">
+      <div class="card">
+        <div class="tag">Searching the usual way</div>
+        <div class="item">Type your topic, then remember to add <b>reddit</b></div>
+        <div class="item">Scroll past listicles and affiliate roundups</div>
+        <div class="item">Open a thread — it's <b>four years old</b></div>
+        <div class="item">Go back, dig for a date filter</div>
+      </div>
+      <div class="card win">
+        <div class="tag">Searching with RecencyPulse</div>
+        <div class="item">Click the icon, type your topic</div>
+        <div class="item">Click <b>Reddit</b> or <b>TikTok</b></div>
+        <div class="item">Recent human discussion, <b>already filtered</b></div>
+        <div class="item">That's the whole thing</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>What it can't see</h2>
+    <ul class="facts">
+      <li><span class="n">01</span><span><b>No permissions requested.</b> Check the install screen — Chrome shows nothing to approve, because there's nothing to approve.</span></li>
+      <li><span class="n">02</span><span><b>No data collected.</b> Your topics go from the box to the search page. They aren't stored, sent anywhere, or logged.</span></li>
+      <li><span class="n">03</span><span><b>No page access.</b> It can't read the sites you visit. It only opens new tabs.</span></li>
+      <li><span class="n">04</span><span><b>Source is public.</b> It's about a hundred lines of plain JavaScript. Read all of it in a couple of minutes.</span></li>
+    </ul>
+  </section>
+
+  <div class="cta" id="install">
+    <h2>Get it</h2>
+    <p>Free, and staying that way. No account, no upsell, no paid tier waiting behind it.</p>
+    <a class="install" href="CHROME_STORE_URL_HERE">Add to Chrome</a>
+    <div class="sub">Works in Chrome, Edge, Brave, and Arc · <a href="GITHUB_URL_HERE">View source</a></div>
+  </div>
+
+  <footer>
+    <span>RecencyPulse — an open-source search shortcut.</span>
+    <span>Not affiliated with Reddit or TikTok.</span>
+  </footer>
+
+</div>
+
+<script>
+(function(){
+  var input   = document.getElementById('topic');
+  var readout = document.getElementById('readout');
+  var picks   = Array.prototype.slice.call(document.querySelectorAll('.pick'));
+  var current = 'reddit';
+
+  var routes = {
+    reddit:   function(q){ return 'https://www.reddit.com/search/?q=' + q + '&sort=relevance&t=month'; },
+    tiktok:   function(q){ return 'https://www.tiktok.com/search?q=' + q; }
+  };
+
+  // Render the URL that would open, with the query and time-bound highlighted.
+  function paint(){
+    var raw = input.value.trim();
+    var q = encodeURIComponent(raw);
+
+    if(!raw){
+      readout.innerHTML = '<span class="k">waiting for a topic</span><span class="caret">&nbsp;</span>';
+      return;
+    }
+
+    if(current === 'reddit'){
+      readout.innerHTML =
+        '<span class="k">https://www.reddit.com/search/?q=</span>' +
+        '<span class="q">' + q + '</span>' +
+        '<span class="k">&amp;sort=relevance</span>' +
+        '<span class="t">&amp;t=month</span>';
+    } else {
+      readout.innerHTML =
+        '<span class="k">https://www.tiktok.com/search?q=</span>' +
+        '<span class="q">' + q + '</span>';
+    }
+  }
+
+  function select(p){
+    current = p;
+    picks.forEach(function(b){ b.classList.toggle('on', b.dataset.p === p); });
+    paint();
+  }
+
+  function go(){
+    var q = encodeURIComponent(input.value.trim());
+    if(!q){ input.focus(); return; }
+    window.open(routes[current](q), '_blank', 'noopener');
+  }
+
+  picks.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var p = btn.dataset.p;
+      if(p !== current){ select(p); return; }  // first click aims, second fires
+      go();
+    });
+  });
+
+  input.addEventListener('input', paint);
+  input.addEventListener('keydown', function(e){ if(e.key === 'Enter') go(); });
+
+  paint();
+})();
+</script>
+
+</body>
+</html>
