@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Support — RecencyPulse</title>
+<meta name="description" content="Help, troubleshooting, and frequently asked questions for the RecencyPulse Chrome extension.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --paper:#f7f7f5;
+    --ink:#14131a;
+    --ink-soft:#5c5a66;
+    --hair:#e2e1dc;
+    --orange:#ff4500;
+    --display:"Bricolage Grotesque",system-ui,sans-serif;
+    --mono:"JetBrains Mono",ui-monospace,monospace;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;background:var(--paper);color:var(--ink);
+    font-family:var(--display);font-size:17px;line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{width:100%;max-width:720px;margin:0 auto;padding:0 24px;}
+
+  header{padding:28px 0 0;}
+  .bar{display:flex;align-items:center;justify-content:space-between;gap:16px;}
+  .mark{
+    display:flex;align-items:center;gap:10px;font-weight:800;
+    letter-spacing:-0.02em;font-size:17px;color:var(--ink);text-decoration:none;
+  }
+  .chip{
+    width:26px;height:26px;border-radius:7px;background:var(--orange);
+    color:#fff;display:grid;place-items:center;
+    font-size:11px;font-weight:800;letter-spacing:-0.03em;
+  }
+  .bar a.back{
+    color:var(--ink-soft);text-decoration:none;font-size:14px;
+    border-bottom:1px solid var(--hair);padding-bottom:1px;
+  }
+  .bar a.back:hover{color:var(--ink);border-color:var(--ink);}
+
+  .head{padding:56px 0 34px;}
+  .eyebrow{
+    font-family:var(--mono);font-size:12px;letter-spacing:0.06em;
+    text-transform:uppercase;color:var(--ink-soft);margin-bottom:18px;
+  }
+  h1{
+    font-size:clamp(34px,6vw,52px);line-height:1.04;
+    letter-spacing:-0.035em;font-weight:800;margin:0 0 18px;
+  }
+  .lede{font-size:19px;color:var(--ink-soft);margin:0;max-width:54ch;}
+
+  section{padding:38px 0;border-top:1px solid var(--hair);}
+  h2{
+    font-size:13px;font-family:var(--mono);font-weight:600;
+    letter-spacing:0.08em;text-transform:uppercase;
+    color:var(--ink-soft);margin:0 0 22px;
+  }
+
+  .q{margin-bottom:26px;}
+  .q:last-child{margin-bottom:0;}
+  .q h3{
+    font-size:18.5px;font-weight:600;letter-spacing:-0.02em;
+    margin:0 0 7px;color:var(--ink);
+  }
+  .q p{margin:0 0 10px;color:var(--ink-soft);font-size:16px;}
+  .q p:last-child{margin-bottom:0;}
+  strong{color:var(--ink);font-weight:600;}
+  code{
+    font-family:var(--mono);font-size:14px;
+    background:#ecebe7;padding:2px 6px;border-radius:4px;color:var(--ink);
+  }
+
+  ol{margin:0;padding-left:20px;color:var(--ink-soft);font-size:16px;}
+  ol li{margin-bottom:6px;}
+
+  /* contact block */
+  .contact{
+    background:var(--ink);color:#e8e7e2;border-radius:13px;
+    padding:26px;margin-top:8px;
+  }
+  .contact .label{
+    font-family:var(--mono);font-size:11px;letter-spacing:.07em;
+    text-transform:uppercase;color:#8f8d99;margin-bottom:14px;
+  }
+  .contact p{margin:0 0 14px;font-size:17px;color:#e8e7e2;}
+  .contact p:last-child{margin-bottom:0;}
+  .contact a{color:#ff7a45;border-bottom:1px solid rgba(255,122,69,.4);text-decoration:none;}
+  .contact a:hover{border-color:#ff7a45;}
+
+  a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--hair);}
+  a:hover{border-color:var(--ink);}
+
+  footer{
+    padding:34px 0 46px;border-top:1px solid var(--hair);
+    font-family:var(--mono);font-size:11.5px;color:var(--ink-soft);
+    display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;
+  }
+  footer a{color:var(--ink-soft);}
+
+  :focus-visible{outline:3px solid var(--orange);outline-offset:3px;}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <header>
+    <div class="bar">
+      <a class="mark" href="index.html"><span class="chip">RP</span> RecencyPulse</a>
+      <a class="back" href="index.html">← Back to site</a>
+    </div>
+  </header>
+
+  <div class="head">
+    <div class="eyebrow">Support</div>
+    <h1>Help &amp; common questions</h1>
+    <p class="lede">
+      RecencyPulse is small, so most problems have short answers. If yours isn't here, get in touch at the bottom of the page.
+    </p>
+  </div>
+
+  <section>
+    <h2>Getting started</h2>
+
+    <div class="q">
+      <h3>How do I use it?</h3>
+      <p>Click the RecencyPulse icon in your Chrome toolbar, type a topic, then click <strong>Search Reddit</strong> or <strong>Search TikTok</strong>. The results open in a new tab.</p>
+      <p>You can also press <strong>Enter</strong> instead of clicking — it searches whichever platform is currently selected.</p>
+    </div>
+
+    <div class="q">
+      <h3>I can't see the icon in my toolbar</h3>
+      <p>Chrome hides new extensions behind the puzzle-piece icon. Click the puzzle piece, find RecencyPulse, and click the pin next to it to keep it visible.</p>
+    </div>
+
+    <div class="q">
+      <h3>What does the coloured outline mean?</h3>
+      <p>It shows which platform is selected. Orange means Reddit, black means TikTok. Pressing Enter searches the outlined one.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Troubleshooting</h2>
+
+    <div class="q">
+      <h3>Nothing happens when I click a button</h3>
+      <p>Check that you've typed something in the box — the input briefly turns orange if it's empty.</p>
+      <p>If it's still stuck, try reloading the extension:</p>
+      <ol>
+        <li>Go to <code>chrome://extensions</code></li>
+        <li>Find RecencyPulse</li>
+        <li>Click the circular reload arrow</li>
+      </ol>
+    </div>
+
+    <div class="q">
+      <h3>TikTok shows me a login screen instead of results</h3>
+      <p>TikTok limits search for logged-out visitors. Sign in to TikTok in the same browser and the results will load normally.</p>
+      <p>This isn't something the extension can work around — it's TikTok's own restriction, and it applies whether you arrive via RecencyPulse or by typing the address yourself.</p>
+    </div>
+
+    <div class="q">
+      <h3>Reddit results look older than a month</h3>
+      <p>Reddit occasionally shows a few pinned or highly-ranked posts outside the window. The time filter is applied in the URL — you can confirm it by looking for <code>t=month</code> in the address bar of the results tab.</p>
+    </div>
+
+    <div class="q">
+      <h3>Why isn't Facebook included?</h3>
+      <p>It was, briefly. Facebook returns an error for direct search links unless you're already logged in, and has been retiring the search paths that made it work. Rather than ship a button that fails for most people, it was removed.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Privacy &amp; permissions</h2>
+
+    <div class="q">
+      <h3>Why didn't Chrome ask me to approve anything?</h3>
+      <p>Because there's nothing to approve. RecencyPulse requests no permissions at all — it only opens new tabs, which needs none.</p>
+    </div>
+
+    <div class="q">
+      <h3>Do you store my searches?</h3>
+      <p>No. Your terms are used to build a search URL and nothing else. There's no server, no account, and no storage. The full details are in the <a href="privacy.html">privacy policy</a>.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Still stuck?</h2>
+    <div class="contact">
+      <div class="label">Get in touch</div>
+      <p><strong>Report a bug or request a feature:</strong><br>
+      <a href="https://github.com/wushu75/RecencyPulse/issues">Open an issue on GitHub</a></p>
+      <p><strong>Prefer email?</strong><br>
+      wushumaster75@gmail.com</p>
+      <p>It's a free project maintained in spare time, so replies may take a few days — but every message is read.</p>
+    </div>
+  </section>
+
+  <footer>
+    <span>RecencyPulse — an open-source search shortcut.</span>
+    <span><a href="privacy.html">Privacy</a> · Not affiliated with Reddit or TikTok.</span>
+  </footer>
+
+</div>
+
+</body>
+</html>
