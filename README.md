@@ -133,7 +133,7 @@ Please keep it dependency-free and permission-free — that's the point of the p
 
 ## License
 
-MIT. See [LICENSE](LICENSE).
+MIT.
 
 ---
 
