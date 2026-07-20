@@ -1,3 +1,26 @@
+<h1 align="center">RecencyPulse</h1>
+
+<p align="center">
+  <strong>Search what people actually said this month.</strong><br>
+  A free, open-source Chrome extension that jumps straight to recent Reddit and TikTok discussion.
+</p>
+
+<p align="center">
+  <a href="https://wushu75.github.io/RecencyPulse/">Website</a> ·
+  <a href="https://chromewebstore.google.com/detail/recencypulse-social-searc/ojoeceihhidhabomofgddlbhpmioldeb">Install</a> ·
+  <a href="#how-it-works">How it works</a> ·
+  <a href="#privacy">Privacy</a>
+</p>
+
+<p align="center">
+  <img alt="Manifest V3" src="https://img.shields.io/badge/Manifest-V3-1877f2">
+  <img alt="Permissions: none" src="https://img.shields.io/badge/permissions-none-ff4500">
+  <img alt="License: MIT" src="https://img.shields.io/badge/license-MIT-14131a">
+  <a href="https://chromewebstore.google.com/detail/recencypulse-social-searc/ojoeceihhidhabomofgddlbhpmioldeb"><img alt="Chrome Web Store" src="https://img.shields.io/badge/Chrome%20Web%20Store-live-34a853"></a>
+</p>
+
+---
+
 ## What it is
 
 Search results have filled up with pages written to rank well rather than to be read. When you want a real opinion — is this thing worth buying, is this neighbourhood any good, did anyone else hit this bug — you end up appending `reddit` to every search out of habit.
@@ -12,9 +35,11 @@ Reddit searches are pinned to the **past month** by default — the filter most 
 
 ## Install
 
-**From the Chrome Web Store** *(pending review)*
+**From the Chrome Web Store**
 
-> Link goes here once the listing is live.
+> ### [→ Add RecencyPulse to Chrome](https://chromewebstore.google.com/detail/recencypulse-social-searc/ojoeceihhidhabomofgddlbhpmioldeb)
+
+Or search "RecencyPulse" in the Chrome Web Store.
 
 **From source**
 
